@@ -102,6 +102,34 @@ body{
   padding:3rem;
   box-shadow: 12px 12px 2px 1px var(--primary-color);
 }
+
+
+.back{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+.back-button{
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: var(--primary-color);
+  color:white;
+  border-radius: 40px;
+  transition: all ease 0.2s;
+  border: 4px solid transparent;
+}
+.back-button:hover{
+  border:4px solid var(--primary-color);
+  color:var(--primary-color);
+  background-color: white;
+}
+
+.back-button {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
 .form h1{
   font-size: 5rem;
   color:var(--primary-color);

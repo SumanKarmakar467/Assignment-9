@@ -27,7 +27,7 @@ const Home = () => {
             <button
               className="btn"
               onClick={() => {
-                navigate("/employee");
+                navigate("/helpdesk");
               }}
             >
               Front Desk
@@ -44,7 +44,7 @@ const Home = () => {
           <div className="cart-four">
             <p className="para">ALL the access & report's</p>
             <button className="btn" onClick={() => {
-                navigate("/employee");
+                navigate("/admin");
               }}>Admin</button>
           </div>
         </div>

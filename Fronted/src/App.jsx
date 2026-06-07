@@ -3,6 +3,8 @@ import Home from './pages/Home';
 import VisitorForm from './pages/VisitorForm';
 import Employee from "./pages/Employee";
 import Admin from "./pages/Admin";
+import Helpdesk from "./pages/Helpdesk";
+
 
 
 
@@ -17,6 +19,8 @@ function App() {
         <Route path="/visitor" element={<VisitorForm />} />
         <Route path="/employee" element={<Employee />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/helpdesk" element={<Helpdesk />} />
+
 
       </Routes>
     </BrowserRouter>

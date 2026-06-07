@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const API_URL = "http://localhost:5000/api";
+const SERVER_URL = "http://localhost:5000";
 
 const VisitorForm = () => {
   const navigate = useNavigate();
@@ -65,6 +66,14 @@ const VisitorForm = () => {
   const qrText = appointment
     ? `Visitor: ${appointment.name}, Email: ${appointment.email}, Status: ${appointment.status}`
     : "";
+
+  const getImageUrl = (image) => {
+    if (!image) {
+      return "";
+    }
+
+    return `${SERVER_URL}/uploads/${image}`;
+  };
 
   return (
     <div className="page">
@@ -144,6 +153,13 @@ const VisitorForm = () => {
 
           {appointment && (
             <div className="visitor-list">
+              {appointment.image && (
+                <img
+                  className="visitor-photo"
+                  alt={appointment.name}
+                  src={getImageUrl(appointment.image)}
+                />
+              )}
               <h3>{appointment.name}</h3>
               <p>Status: {appointment.status}</p>
               <p>Purpose: {appointment.purpose}</p>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const API_URL = "http://localhost:5000/api";
+const SERVER_URL = "http://localhost:5000";
 const EMPLOYEE_EMAILS = ["employee@gmail.com", "employee@gmial.com"];
 
 const Employee = () => {
@@ -12,6 +13,14 @@ const Employee = () => {
   const [visitorEmail, setVisitorEmail] = useState("");
 
   const visitorFormLink = `${window.location.origin}/visitors`;
+
+  const getImageUrl = (image) => {
+    if (!image) {
+      return "";
+    }
+
+    return `${SERVER_URL}/uploads/${image}`;
+  };
 
   const fetchVisitors = async () => {
     const response = await fetch(`${API_URL}/employee`);
@@ -110,6 +119,13 @@ const Employee = () => {
 
           {visitors.map((visitor) => (
             <div key={visitor._id} className="visitor-list">
+              {visitor.image && (
+                <img
+                  className="visitor-photo"
+                  alt={visitor.name}
+                  src={getImageUrl(visitor.image)}
+                />
+              )}
               <h3 className="visitor-name">{visitor.name}</h3>
               <p>Email: {visitor.email}</p>
               <p>Purpose: {visitor.purpose}</p>

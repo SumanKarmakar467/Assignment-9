@@ -38,7 +38,7 @@ exports.getVisitors = async (req, res) => {
   }
 };
 
-// Visitor can check appointment by email
+// Visitor can check status by email
 exports.getVisitorByEmail = async (req, res) => {
   try {
     const visitor = await Visitor.findOne({ email: req.params.email }).sort({
@@ -55,7 +55,7 @@ exports.getVisitorByEmail = async (req, res) => {
   }
 };
 
-// Employee can approve or reject visitor appointment
+// Employee can approve or reject visitor 
 exports.updateVisitorStatus = async (req, res) => {
   try {
     const { status } = req.body;

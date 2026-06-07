@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Employee = () => {
+     const navigate = useNavigate();
   const [visitors, setVisitors] = useState([]);
 
   useEffect(() => {

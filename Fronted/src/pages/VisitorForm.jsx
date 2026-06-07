@@ -2,8 +2,8 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:5000/api";
-const SERVER_URL = "http://localhost:5000";
+const SERVER_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = `${SERVER_URL}/api`;
 
 const VisitorForm = () => {
   const navigate = useNavigate();

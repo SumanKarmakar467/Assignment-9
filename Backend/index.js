@@ -9,9 +9,14 @@ const cors = require("cors");
 dotenv.config();
 
 const app=express();
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://assignment-9-kappa-seven.vercel.app",
+    process.env.FRONTEND_URL,
+].filter(Boolean);
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials:true,
 }));
 app.use(express.json());

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:5000/api";
-const SERVER_URL = "http://localhost:5000";
+const SERVER_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = `${SERVER_URL}/api`;
 const EMPLOYEE_EMAILS = ["employee@gmail.com", "employee@gmial.com"];
 
 const Employee = () => {

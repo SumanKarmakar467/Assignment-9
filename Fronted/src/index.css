@@ -169,3 +169,71 @@ body{
 .int{
   padding:10px;
 }
+
+/* Employee */
+.all-visitors {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 20px;
+}
+
+.back {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+
+.back-button {
+  padding: 10px 20px;
+  border: 4px solid transparent;
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+
+
+.employee {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 30px;
+  width: 700px;
+  background: white;
+  border-radius: 12px;
+}
+
+.heading-employee {
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 3rem;
+}
+
+.visitor-list {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: ease 0.3s;
+}
+
+.visitor-list:hover {
+    box-shadow: 12px 12px 2px 1px var(--primary-color);
+
+}
+
+.visitor-name {
+  color: var(--primary-color);
+  margin-bottom: 8px;
+}
+
+.visitor-para {
+  margin: 4px 0;
+}

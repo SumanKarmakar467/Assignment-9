@@ -1,6 +1,8 @@
 const Visitor = require("../model/visitor");
 
-const createVisitor = async (req, res) => {
+// Create Visitors 
+exports.createVisitor = async (req, res) => {
+
   try {
     const { name, email, purpose, date } = req.body;
 
@@ -15,7 +17,7 @@ const createVisitor = async (req, res) => {
       email,
       purpose,
       date,
-      image: req.file.filename,
+      // image: req.file.filename,
     });
 
     res.status(201).json(visitor);
@@ -26,4 +28,12 @@ const createVisitor = async (req, res) => {
   }
 };
 
-module.exports = { createVisitor };
+// Get All Visitors By Employee
+exports.getVisitors = async (req, res) => {
+  const visitor = await Visitor.find();
+
+  if(!visitor){
+    res.status(400).json({error: "No Such Visitors"})
+  }
+  res.status(200).json(visitor);
+}  

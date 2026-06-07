@@ -14,22 +14,28 @@ const Home = () => {
           <div className="cart-one">
             <p className="para">Visitor's apply for appointment</p>
 
-            <button
-              className="btn"
-              onClick={() => navigate("/visitor")}
-            >
+            <button 
+              className="btn" 
+              onClick={() => 
+              navigate("/visitor")}>
               Visitor's
             </button>
           </div>
 
           <div className="cart-two">
             <p className="para">Help Visitor's</p>
-            <button className="btn">Front Desk</button>
+            <button
+              className="btn"
+            >
+              Front Desk
+            </button>
           </div>
 
           <div className="cart-three">
             <p className="para">Give Appointment to the Visitor's</p>
-            <button className="btn">Employee</button>
+            <button className="btn" onClick={() => {
+                navigate("/employee");
+              }}>Employee</button>
           </div>
 
           <div className="cart-four">

@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDb = require("./config/db");
-const visitorRoutes = require("./routes/visitorRoutes");
+const passRoutes = require("./routes/passRoutes");
 const cors = require("cors");
 
 
@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 5000;
 app.get("/",(req, res) => {
     res.send("This is a Visitor Pass Management System Testing");
 });
-app.use("/api/visitors", visitorRoutes);
+app.use("/api", passRoutes);
 
 const startServer = async () => {
     await connectDb();

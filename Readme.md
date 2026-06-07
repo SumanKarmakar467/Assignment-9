@@ -4,7 +4,7 @@
 
 # Visitor Registration 
 
-    Visitor (self-service)
+    Visitor - Fill the form and check the status 
 
     Before arriving, a visitor fills out a pre-registration form — or an employee sends them an invite link. This creates a pending appointment in the system.
 
@@ -100,3 +100,63 @@
     Database - MongoDB
     Backend - Node.js , Express.js
     Frontend - React.js
+
+
+# Backend 
+    Node.js + Express.js
+
+# command
+    npm init - for package.json
+    npm install express - for express
+    npm install mongoose - connect/use database
+    npm install bcryptjs - helping hash password authentication 
+    npm install jsonwebtoken - generate/verifes jsonToken 
+    npm install dotenv -  load the env values 
+    npm install cors - to communicate frontend and bakend 
+    npm install nodemon - restart backend automatically 
+    npm install react-router-dom - for going to another page or navigate 
+    npm install axios - used to call backend APIs from frontend
+    npm install multer - convert the upload file into txt file that helps express to analyze
+
+
+# run - npm run dev
+
+# Workflow 
+                                                index.js  -- Run the server using express and PORT ( using dotenv )
+
+                ⬇️                                                                                ⬇️
+        passRoutes.js                                                                       db.js ( config )
+                                                                                  
+    /api/visiotor   - for visitor's                                                      Connect the MongoDB database using mongoose 
+    /api/employee   - for employee
+    /api/admin      - for admin
+    /api/helpdesk   - for helpdesk 
+
+
+                ⬇️                                                               ⬇️
+        visitorController.js                                                    Visitor.js ( model ) - the database schema 
+    all the api logic available here 
+        create , update, get, delete 
+
+                
+
+
+# Frontend 
+    Vite React 
+
+# command 
+    npm create vite@latest - for create vite react 
+
+
+# run - npm run dev
+                                                                src
+                                                                ⬇️
+                                                            main.jsx
+                                                                ⬇️
+                                                            app.jsx ( home page )
+                                                                ⬇️
+                          Home page                                               Home.jsx ( pages ) all the logic is here for home page 
+                          Visitor Page                                            VisitorForm.jsx ( pages ) all the logic is here for visitor page
+                          Helpdesk Page                                         Helpdesk.jsx ( pages ) all the logic is here for helpdesk page
+                          Employee Page                                           Employee.jsx ( pages ) all the logic is here for employee page
+                          Admin Page                                              Admin.jsx ( pages ) all the logic is here for admin page 

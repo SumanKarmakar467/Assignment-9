@@ -4,7 +4,7 @@
 
 # Visitor Registration 
 
-    Visitor (self-service) or Employee (invite)
+    Visitor (self-service)
 
     Before arriving, a visitor fills out a pre-registration form — or an employee sends them an invite link. This creates a pending appointment in the system.
 

@@ -1,47 +1,97 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const admin = () => {
+const API_URL = "http://localhost:5000/api";
+const ADMIN_EMAIL = "admin@gmail.com";
 
-    const navigate = useNavigate();
+const Admin = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [visitors, setVisitors] = useState([]);
 
+  const fetchVisitors = async () => {
+    const response = await fetch(`${API_URL}/admin`);
+    const data = await response.json();
+
+    if (response.ok) {
+      setVisitors(data);
+    }
+  };
+
   useEffect(() => {
-    const fetchVisitors = async () => {
-      const response = await fetch(
-        "http://localhost:5000/api/employee"
-      );
+    if (isLoggedIn) {
+      fetchVisitors();
+    }
+  }, [isLoggedIn]);
 
-      const data = await response.json();
+  const loginAdmin = () => {
+    if (email === ADMIN_EMAIL) {
+      setIsLoggedIn(true);
+    } else {
+      alert("Use admin@gmail.com");
+    }
+  };
 
-      if (response.ok) {
-        setVisitors(data);
-      }
-    };
+  const deleteVisitor = async (id) => {
+    await fetch(`${API_URL}/admin/${id}`, {
+      method: "DELETE",
+    });
 
     fetchVisitors();
-  }, []);
+  };
+
+  const formatTime = (time) => {
+    if (!time) {
+      return "Not recorded";
+    }
+
+    return new Date(time).toLocaleString();
+  };
+
   return (
-    <div className="all-visitors">
-        <div className="back">
-          <button type="button" className="back-button" onClick={() => navigate("/")}>
-            ← Back
+    <div className="page">
+      <button type="button" className="back-button" onClick={() => navigate("/")}>
+        Back
+      </button>
+
+      {!isLoggedIn ? (
+        <div className="panel small-panel">
+          <h1>Admin Login</h1>
+          <input
+            className="inputs"
+            type="email"
+            value={email}
+            placeholder="admin@gmail.com"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button className="submit" onClick={loginAdmin}>
+            Show Report
           </button>
         </div>
+      ) : (
         <div className="employee">
-      <h1 className="heading-employee">All Visitors List</h1>
+          <h1 className="heading-employee">Admin Report</h1>
 
-      {visitors.map((visitor) => (
-        <div key={visitor._id} className="visitor-list">
-          <h3 className="visitor-name">{visitor.name}</h3>
-          <p className="visitor-para">{visitor.email}</p>
-          <p className="visitor-para">{visitor.purpose}</p>
-          <p className="visitor-para">{visitor.date}</p>
+          {visitors.map((visitor) => (
+            <div key={visitor._id} className="visitor-list">
+              <h3 className="visitor-name">{visitor.name}</h3>
+              <p>Email: {visitor.email}</p>
+              <p>Purpose: {visitor.purpose}</p>
+              <p>Date: {new Date(visitor.date).toLocaleDateString()}</p>
+              <p>Status: {visitor.status}</p>
+              <p>Check In: {formatTime(visitor.checkInTime)}</p>
+              <p>Check Out: {formatTime(visitor.checkOutTime)}</p>
+
+              <button className="reject" onClick={() => deleteVisitor(visitor._id)}>
+                Delete
+              </button>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default admin
+export default Admin;

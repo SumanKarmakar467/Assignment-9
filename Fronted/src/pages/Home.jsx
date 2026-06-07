@@ -17,7 +17,7 @@ const Home = () => {
             <button 
               className="btn" 
               onClick={() => 
-              navigate("/visitor")}>
+              navigate("/visitors")}>
               Visitor's
             </button>
           </div>

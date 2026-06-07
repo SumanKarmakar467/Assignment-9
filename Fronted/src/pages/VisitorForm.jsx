@@ -1,18 +1,22 @@
 import axios from "axios";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = "http://localhost:5000/api";
+
 const VisitorForm = () => {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     purpose: "",
     date: "",
   });
-
   const [image, setImage] = useState(null);
-  const fileInputRef = useRef(null);
+  const [checkEmail, setCheckEmail] = useState("");
+  const [appointment, setAppointment] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -25,7 +29,6 @@ const VisitorForm = () => {
     e.preventDefault();
 
     const data = new FormData();
-
     data.append("name", formData.name);
     data.append("email", formData.email);
     data.append("purpose", formData.purpose);
@@ -33,25 +36,12 @@ const VisitorForm = () => {
     data.append("image", image);
 
     try {
-      await axios.post(
-        "http://localhost:5000/api/visitors",
-        data
-      );
+      await axios.post(`${API_URL}/visitors`, data);
+      alert("Appointment submitted. Status is Pending.");
 
-      alert("Visitor Added Successfully");
-
-      // Clear form fields
-      setFormData({
-        name: "",
-        email: "",
-        purpose: "",
-        date: "",
-      });
-
-      // Clear image state
+      setFormData({ name: "", email: "", purpose: "", date: "" });
       setImage(null);
 
-      // Clear file input
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -61,56 +51,61 @@ const VisitorForm = () => {
     }
   };
 
+  const checkAppointment = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/visitors/check/${checkEmail}`);
+      setAppointment(response.data);
+    } catch (error) {
+      console.error(error);
+      setAppointment(null);
+      alert("No appointment found for this email");
+    }
+  };
+
+  const qrText = appointment
+    ? `Visitor: ${appointment.name}, Email: ${appointment.email}, Status: ${appointment.status}`
+    : "";
+
   return (
-    <div className="visitor-form">
-      <form className="form" onSubmit={handleSubmit}>
-        <div className="back">
-          <button type="button" className="back-button" onClick={() => navigate("/")}>
-            ← Back
-          </button>
-        </div>
+    <div className="page">
+      <button type="button" className="back-button" onClick={() => navigate("/")}>
+        Back
+      </button>
 
-        <div className="int">
-          <h1>Visitor's Form</h1>
-        </div>
+      <div className="two-column">
+        <form className="panel" onSubmit={handleSubmit}>
+          <h1>Visitor Form</h1>
 
-        <div className="int">
           <input
             className="inputs"
             type="text"
             name="name"
             value={formData.name}
-            placeholder="Enter your name..."
+            placeholder="Enter your name"
             onChange={handleChange}
             required
           />
-        </div>
 
-        <div className="int">
           <input
             className="inputs"
             type="email"
             name="email"
             value={formData.email}
-            placeholder="Enter your email..."
+            placeholder="Enter your email"
             onChange={handleChange}
             required
           />
-        </div>
 
-        <div className="int">
           <input
             className="inputs"
             type="text"
             name="purpose"
             value={formData.purpose}
-            placeholder="Enter your purpose..."
+            placeholder="Purpose of visit"
             onChange={handleChange}
             required
           />
-        </div>
 
-        <div className="int">
           <input
             className="inputs"
             type="date"
@@ -119,25 +114,52 @@ const VisitorForm = () => {
             onChange={handleChange}
             required
           />
-        </div>
 
-        <div className="int">
           <input
             ref={fileInputRef}
-            className="inputs-img"
+            className="inputs"
             type="file"
             accept="image/*"
             onChange={(e) => setImage(e.target.files[0])}
             required
           />
-        </div>
 
-        <div className="int">
           <button type="submit" className="submit">
-            Submit
+            Submit Appointment
           </button>
+        </form>
+
+        <div className="panel">
+          <h2>Check Appointment</h2>
+          <input
+            className="inputs"
+            type="email"
+            value={checkEmail}
+            placeholder="Enter your email"
+            onChange={(e) => setCheckEmail(e.target.value)}
+          />
+          <button type="button" className="submit" onClick={checkAppointment}>
+            Check Status
+          </button>
+
+          {appointment && (
+            <div className="visitor-list">
+              <h3>{appointment.name}</h3>
+              <p>Status: {appointment.status}</p>
+              <p>Purpose: {appointment.purpose}</p>
+              <p>Date: {new Date(appointment.date).toLocaleDateString()}</p>
+
+              {appointment.status === "Approved" && (
+                <img
+                  className="qr-code"
+                  alt="Visitor QR code"
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(qrText)}`}
+                />
+              )}
+            </div>
+          )}
         </div>
-      </form>
+      </div>
     </div>
   );
 };

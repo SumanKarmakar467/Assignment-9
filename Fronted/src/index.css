@@ -201,6 +201,27 @@ input {
   background: white;
 }
 
+.invite-box {
+  padding: 18px;
+  border: 1px solid #d8dde3;
+  border-radius: 8px;
+  margin-bottom: 22px;
+  background: white;
+}
+
+.invite-box h2 {
+  color: var(--primary-color);
+  margin-bottom: 8px;
+}
+
+.invite-box p {
+  margin-bottom: 12px;
+}
+
+.invite-box .inputs {
+  margin-bottom: 10px;
+}
+
 .visitor-name,
 .visitor-list h3 {
   color: var(--primary-color);

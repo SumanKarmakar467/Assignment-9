@@ -9,6 +9,9 @@ const Employee = () => {
   const [email, setEmail] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [visitors, setVisitors] = useState([]);
+  const [visitorEmail, setVisitorEmail] = useState("");
+
+  const visitorFormLink = `${window.location.origin}/visitors`;
 
   const fetchVisitors = async () => {
     const response = await fetch(`${API_URL}/employee`);
@@ -43,6 +46,23 @@ const Employee = () => {
     fetchVisitors();
   };
 
+  const copyInviteLink = async () => {
+    await navigator.clipboard.writeText(visitorFormLink);
+    alert("Visitor form link copied");
+  };
+
+  const sendInviteEmail = () => {
+    if (!visitorEmail) {
+      alert("Enter visitor email first");
+      return;
+    }
+
+    const subject = "Visitor Appointment Form";
+    const body = `Hello, please fill this visitor appointment form: ${visitorFormLink}`;
+
+    window.location.href = `mailto:${visitorEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   return (
     <div className="page">
       <button type="button" className="back-button" onClick={() => navigate("/")}>
@@ -66,6 +86,27 @@ const Employee = () => {
       ) : (
         <div className="employee">
           <h1 className="heading-employee">Visitor Appointments</h1>
+
+          <div className="invite-box">
+            <h2>Invite Visitor</h2>
+            <p>Share this link with a visitor so they can fill the visitor form.</p>
+            <input className="inputs" type="text" value={visitorFormLink} readOnly />
+            <input
+              className="inputs"
+              type="email"
+              value={visitorEmail}
+              placeholder="Visitor email"
+              onChange={(e) => setVisitorEmail(e.target.value)}
+            />
+            <div className="button-row">
+              <button className="submit" type="button" onClick={copyInviteLink}>
+                Copy Link
+              </button>
+              <button className="approve" type="button" onClick={sendInviteEmail}>
+                Send Invite Email
+              </button>
+            </div>
+          </div>
 
           {visitors.map((visitor) => (
             <div key={visitor._id} className="visitor-list">

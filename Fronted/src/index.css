@@ -23,7 +23,7 @@ body {
 
 button,
 input {
-  font: inheit;
+  font: inherit;
 }
 
 /* Home Page */

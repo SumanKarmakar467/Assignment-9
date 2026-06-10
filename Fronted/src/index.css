@@ -16,7 +16,7 @@
 body {
   min-height: 100vh;
   width: 100%;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-srif;
   color: var(--text-color);
   background: #ffffff;
 }
